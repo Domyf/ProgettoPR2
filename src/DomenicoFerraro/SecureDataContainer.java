@@ -7,6 +7,7 @@ public interface SecureDataContainer<E> {
                 in un sistema di utenti con un meccanismo che preserva la sicurezza dei dati.
        TYPICAL ELEMENT: {<user_0, {data_0, ... , data_k}>, ... ,<user_n, {data_0, ... , data_f}>}
                         dove user_i != user_j per ogni i,j tale che 0 <= i < j < n
+                        TODO aggiornare gli elementi tipici
      */
 
     //Crea l’identità un nuovo utente della collezione
