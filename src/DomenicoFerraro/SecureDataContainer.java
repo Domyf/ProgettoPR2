@@ -27,5 +27,5 @@ public interface SecureDataContainer<E> {
     //restituisce un iteratore (senza remove) che genera tutti i dati /dell’utente in ordine arbitrario se vengono rispettati i controlli di identità
     public Iterator<E> getIterator(String Owner, String passw);
 
-    // TODO altre operazione da definire a scelta
+    // TODO altre operazioni da definire a scelta
 }
