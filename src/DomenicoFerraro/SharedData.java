@@ -6,7 +6,7 @@ public class SharedData<E> {
 
     private E data;
     private String ownerId;
-    private Vector<Integer> othersIDs;
+    private Vector<String> othersIDs;
 
     public SharedData(E data, String ownerId) {
         if (data == null) throw new NullPointerException();
@@ -24,7 +24,7 @@ public class SharedData<E> {
         return ownerId;
     }
 
-    public Vector<Integer> getOthersID() {
+    public Vector<String> getOthersID() {
         return othersIDs;
     }
 

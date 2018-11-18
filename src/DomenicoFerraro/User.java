@@ -11,8 +11,8 @@ public class User {
     }
 
     /** Confronto tra oggetti. Restituisce true se id e passw sono uguali, false altrimenti*/
-    public boolean equals(User other) {
-        return id.equals(other.getId()) && passw.equals(other.getPassw());
+    public boolean equals(Object other) {
+        return id.equals(((User)other).getId()) && passw.equals(((User)other).getPassw());
     }
 
     public String getId() {
@@ -27,7 +27,7 @@ public class User {
         return passw;
     }
 
-    public void setPassw(String passw) {
-        this.passw = passw;
+    public String toString(){
+        return id+" "+passw;
     }
 }

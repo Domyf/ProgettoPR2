@@ -13,7 +13,7 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         storage = new Vector<>();
     }
 
-    /** Crea l’identità un nuovo utente della collezione. */
+    /** Crea l’identità un nuovo utente della collezione se non esiste già. */
     @Override
     public void createUser(String Id, String passw) {
         if (Id == null) throw new NullPointerException();
@@ -21,6 +21,8 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
         if (!checkId(Id)) {                     //Se l'Id non è già presente nella collezione di utenti
             users.add(new User(Id, passw));     //Lo aggiungo
+        } else {
+            System.out.println("Questo utente esiste già."); //TODO sostituire con una Exception
         }
     }
 
@@ -67,12 +69,8 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         return null;
     }
 
-    private int getUserPosition(String id, String passw) {
-        return users.indexOf(new User(id, passw));
-    }
-
     /** Restituisce true se vengono rispettati i controlli di identità, ovvero se esiste un utente con stesso id e passw, null altrimenti. */
-    private boolean logIn(String id, String passw){
+    public boolean logIn(String id, String passw){
         return users.contains(new User(id, passw));
     }
 
@@ -82,5 +80,9 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
             if (us.sameId(other))
                 return true;
         return false;
+    }
+
+    public Vector<User> getUsers() {
+        return users;
     }
 }
