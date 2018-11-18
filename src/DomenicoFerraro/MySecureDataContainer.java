@@ -82,7 +82,12 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         return false;
     }
 
+    //TODO ricordarsi di togliere getUsers() e getStorage()
     public Vector<User> getUsers() {
         return users;
+    }
+
+    public Vector<SharedData<E>> getStorage() {
+        return storage;
     }
 }

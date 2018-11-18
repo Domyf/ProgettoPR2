@@ -5,11 +5,7 @@ import java.util.Iterator;
 public class Main {
 
     public static void main(String[] args) {
-        MySecureDataContainer<Integer> container = new MySecureDataContainer<>();
-
-        container.createUser("Domenico", "pass123");
-        boolean done = container.put("Domenico", "pass123", 15);
-        System.out.println(done);
+        new Window(800,600,"TestProgettoPR2");
     }
 
     public static void printCollection(Iterator it){
