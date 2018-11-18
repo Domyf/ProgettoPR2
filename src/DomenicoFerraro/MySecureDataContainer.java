@@ -6,24 +6,21 @@ import java.util.Vector;
 public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     private Vector<User> users;
-    private Vector<E> storage;
-
-    private int storageDim;
-    private int usersDim;
+    private Vector<SharedData<E>> storage;
 
     public MySecureDataContainer() {
         users = new Vector<>();
         storage = new Vector<>();
-
-        usersDim = 0;
     }
 
+    /** Crea l’identità un nuovo utente della collezione. */
     @Override
     public void createUser(String Id, String passw) {
-        User newUser = new User(Id, passw);     //Creo un nuovo oggetto che rappresenta il nuovo utente
-        if (!users.contains(newUser)) {         //Se l'utente non è già presente nella collezione di utenti
-            users.add(newUser);                 //Lo aggiungo
-            usersDim++;                         //Incremento la dimensione degli utenti
+        if (Id == null) throw new NullPointerException();
+        if (passw == null) throw new NullPointerException();
+
+        if (!checkId(Id)) {                     //Se l'Id non è già presente nella collezione di utenti
+            users.add(new User(Id, passw));     //Lo aggiungo
         }
     }
 
@@ -32,9 +29,17 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         return 0;
     }
 
+    /** Inserisce il valore del dato nella collezione se vengono rispettati i controlli di identità. */
     @Override
     public boolean put(String Owner, String passw, E data) {
-        return false;
+        if (Owner == null) throw new NullPointerException();
+        if (passw == null) throw new NullPointerException();
+        boolean canPut = logIn(Owner, passw);      //Controllo l'identità
+        if (canPut){  //Se vengono rispettati i controlli di identità
+            //Inserisco il dato
+            storage.add(new SharedData<>(data, Owner));
+        }
+        return canPut;   //Ritorno se ho inserito il dato o meno
     }
 
     @Override
@@ -62,4 +67,20 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         return null;
     }
 
+    private int getUserPosition(String id, String passw) {
+        return users.indexOf(new User(id, passw));
+    }
+
+    /** Restituisce true se vengono rispettati i controlli di identità, ovvero se esiste un utente con stesso id e passw, null altrimenti. */
+    private boolean logIn(String id, String passw){
+        return users.contains(new User(id, passw));
+    }
+
+    /** Restituisce true se l'id è già utilizzato, false altrimenti. */
+    private boolean checkId(String other){
+        for (User us: users)
+            if (us.sameId(other))
+                return true;
+        return false;
+    }
 }

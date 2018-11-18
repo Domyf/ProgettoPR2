@@ -5,26 +5,28 @@ import java.util.Vector;
 public class SharedData<E> {
 
     private E data;
-    private int ownerId;
-    private Vector<Integer> othersID;
+    private String ownerId;
+    private Vector<Integer> othersIDs;
 
-    public SharedData(E data, int ownerId) {
-        if (data == null) throw new IllegalArgumentException();
-        if (ownerId < 1) throw new IllegalArgumentException();
+    public SharedData(E data, String ownerId) {
+        if (data == null) throw new NullPointerException();
+        if (ownerId == null) throw new NullPointerException();
         this.data = data;
         this.ownerId = ownerId;
-        othersID = new Vector<>();
+        othersIDs = new Vector<>();
     }
 
     public E getData(){
         return data;
     }
 
-    public int getOwnerId() {
+    public String getOwnerId() {
         return ownerId;
     }
 
     public Vector<Integer> getOthersID() {
-        return othersID;
+        return othersIDs;
     }
+
+    //TODO aggiungere il metodo per condividere this con un utente, quindi inserendo l'Id dell'utente in othersIDs
 }
