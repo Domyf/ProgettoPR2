@@ -152,7 +152,7 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
      * accedere allora restituisce il dato condiviso, altrimenti restituisce null. */
     private SharedData<E> getSharedData(String Owner, String passw, E data) {
         if (logIn(Owner, passw)){  //Se vengono rispettati i controlli di identità
-            for (SharedData sd: storage) {   //Per ogni dato nella collezione
+            for (SharedData<E> sd: storage) {   //Per ogni dato nella collezione
                 if (sd.canGetData(Owner)) {     //Cerco se esiste il dato 'data'
                     //Se lo trovo controllo se Owner può accedervi
                     if (sd.getData().equals(data)) {

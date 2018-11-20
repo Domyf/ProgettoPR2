@@ -29,11 +29,7 @@ public class SharedData<E> {
     /** Restituisce true se l'id dell'utente passato per argomento può accedere il dato. */
     public boolean canGetData(String id){
         //return id.equals(ownerId);
-        return othersIDs.contains(id) || id.equals(ownerId);
-    }
-
-    public Vector<String> getOthersIDs() {
-        return othersIDs;
+        return id.equals(ownerId) || othersIDs.contains(id);
     }
 
     public String toString(){

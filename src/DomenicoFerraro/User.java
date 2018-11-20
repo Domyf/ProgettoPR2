@@ -12,7 +12,8 @@ public class User {
 
     /** Confronto tra oggetti. Restituisce true se id e passw sono uguali, false altrimenti*/
     public boolean equals(Object other) {
-        return id.equals(((User)other).getId()) && passw.equals(((User)other).getPassw());
+        User oth = (User) other;
+        return id.equals(oth.getId()) && passw.equals(oth.getPassw());
     }
 
     public String getId() {
