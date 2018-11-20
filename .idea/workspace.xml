@@ -5,13 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/MySecureDataContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/MySecureDataContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DomenicoFerraro/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DomenicoFerraro/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DomenicoFerraro/MySecureDataContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DomenicoFerraro/MySecureDataContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DomenicoFerraro/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DomenicoFerraro/Window.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,39 +20,39 @@
     <session id="461808079">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="8" />
+          <entry key="project.closed" value="9" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.7" value="2" />
+          <entry key="project.open.time.7" value="3" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="form" value="1" />
-          <entry key="java" value="6" />
+          <entry key="java" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="GUI_DESIGNER_FORM" value="1" />
-          <entry key="JAVA" value="6" />
+          <entry key="JAVA" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="10504" />
-          <entry key="txt" value="438" />
+          <entry key="java" value="11327" />
+          <entry key="txt" value="479" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="10504" />
-          <entry key="PLAIN_TEXT" value="438" />
+          <entry key="JAVA" value="11327" />
+          <entry key="PLAIN_TEXT" value="479" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -67,7 +63,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
+            <state relative-caret-position="122">
               <caret line="28" column="44" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
             </state>
           </provider>
@@ -76,17 +72,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="38" column="5" lean-forward="true" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
+            <state relative-caret-position="153">
+              <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
               <folding>
-                <element signature="e#463#464#0" expanded="true" />
-                <element signature="e#490#491#0" expanded="true" />
-                <element signature="e#734#735#0" expanded="true" />
-                <element signature="e#764#765#0" expanded="true" />
-                <element signature="e#807#808#0" expanded="true" />
-                <element signature="e#839#840#0" expanded="true" />
-                <element signature="e#870#871#0" expanded="true" />
-                <element signature="e#908#909#0" expanded="true" />
+                <element signature="e#474#475#0" expanded="true" />
+                <element signature="e#501#502#0" expanded="true" />
+                <element signature="e#543#544#0" expanded="true" />
+                <element signature="e#586#587#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SecureDataContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="106" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="106" />
+            <state relative-caret-position="255">
+              <caret line="15" column="81" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -113,7 +105,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
+            <state relative-caret-position="2193">
               <caret line="135" column="61" selection-start-line="135" selection-start-column="61" selection-end-line="135" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -130,18 +122,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/MySecureDataContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="74" column="19" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
+            <state relative-caret-position="-107">
+              <caret line="72" column="39" lean-forward="true" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4003#4004#0" expanded="true" />
-                <element signature="e#4030#4031#0" expanded="true" />
-                <element signature="e#3030#3031#0" expanded="true" />
-                <element signature="e#3088#3089#0" expanded="true" />
-                <element signature="e#3611#3612#0" expanded="true" />
-                <element signature="e#3639#3640#0" expanded="true" />
-                <element signature="e#3688#3689#0" expanded="true" />
-                <element signature="e#3718#3719#0" expanded="true" />
+                <element signature="e#4721#4722#0" expanded="true" />
+                <element signature="e#4748#4749#0" expanded="true" />
+                <element signature="e#4942#4943#0" expanded="true" />
+                <element signature="e#5000#5001#0" expanded="true" />
+                <element signature="e#5334#5335#0" expanded="true" />
+                <element signature="e#5362#5363#0" expanded="true" />
+                <element signature="e#5411#5412#0" expanded="true" />
+                <element signature="e#5441#5442#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -168,8 +160,8 @@
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/User.java" />
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/Window.form" />
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/Window.java" />
-        <option value="$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java" />
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/MySecureDataContainer.java" />
+        <option value="$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java" />
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/Main.java" />
       </list>
     </option>
@@ -185,8 +177,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -215,7 +207,7 @@
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="302" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542647210680" />
     <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHubDesktop/app-1.4.3/resources/app/git/cmd/git.exe" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -320,7 +312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542628228089</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Implementazione remove() e get().">
+      <created>1542724892899</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1542724892899</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -336,7 +335,7 @@
     <frame x="-6" y="-6" width="1549" height="837" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25150904" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25486252" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -377,29 +376,10 @@
     <MESSAGE value="Implementazione della creazione dell'utente" />
     <MESSAGE value="Rimossa la finestra" />
     <MESSAGE value="Finestra di test. Creazione utenti e dati." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finestra di test. Creazione utenti e dati." />
+    <MESSAGE value="Implementazione remove() e get()." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementazione remove() e get()." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="135" column="61" selection-start-line="135" selection-start-column="61" selection-end-line="135" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SecureDataContainer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="106" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="106" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -407,44 +387,71 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2193">
+          <caret line="135" column="61" selection-start-line="135" selection-start-column="61" selection-end-line="135" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.form">
+      <provider selected="true" editor-type-id="ui-designer" />
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.base/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="244" column="18" selection-start-line="244" selection-start-column="18" selection-end-line="244" selection-end-column="18" />
+          <folding>
+            <element signature="e#10225#10226#0" expanded="true" />
+            <element signature="e#10308#10309#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SecureDataContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="81" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="38" column="5" lean-forward="true" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
+        <state relative-caret-position="153">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
           <folding>
-            <element signature="e#463#464#0" expanded="true" />
-            <element signature="e#490#491#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-            <element signature="e#764#765#0" expanded="true" />
-            <element signature="e#807#808#0" expanded="true" />
-            <element signature="e#839#840#0" expanded="true" />
-            <element signature="e#870#871#0" expanded="true" />
-            <element signature="e#908#909#0" expanded="true" />
+            <element signature="e#474#475#0" expanded="true" />
+            <element signature="e#501#502#0" expanded="true" />
+            <element signature="e#543#544#0" expanded="true" />
+            <element signature="e#586#587#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/MySecureDataContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="74" column="19" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
+        <state relative-caret-position="-107">
+          <caret line="72" column="39" lean-forward="true" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4003#4004#0" expanded="true" />
-            <element signature="e#4030#4031#0" expanded="true" />
-            <element signature="e#3030#3031#0" expanded="true" />
-            <element signature="e#3088#3089#0" expanded="true" />
-            <element signature="e#3611#3612#0" expanded="true" />
-            <element signature="e#3639#3640#0" expanded="true" />
-            <element signature="e#3688#3689#0" expanded="true" />
-            <element signature="e#3718#3719#0" expanded="true" />
+            <element signature="e#4721#4722#0" expanded="true" />
+            <element signature="e#4748#4749#0" expanded="true" />
+            <element signature="e#4942#4943#0" expanded="true" />
+            <element signature="e#5000#5001#0" expanded="true" />
+            <element signature="e#5334#5335#0" expanded="true" />
+            <element signature="e#5362#5363#0" expanded="true" />
+            <element signature="e#5411#5412#0" expanded="true" />
+            <element signature="e#5441#5442#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
+        <state relative-caret-position="122">
           <caret line="28" column="44" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
         </state>
       </provider>

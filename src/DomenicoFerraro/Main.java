@@ -25,9 +25,16 @@ public class Main {
         //Stampo il dato ottenuto
         System.out.println("La copia vale: "+copia);
         //copia = 20;
-        container.remove(dom.getId(), dom.getPassw(), diociotto);
+
+        //Stampo quanti dati ha l'utente dom
+        System.out.println(dom.getId()+" ha "+container.getSize(dom.getId(), dom.getPassw())+" dati.");
+
+        //Cancello il dato
         System.out.println("Cancello il dato");
+        Integer deleted = container.remove(dom.getId(), dom.getPassw(), diociotto);
+        System.out.println("Ho cancellato "+deleted);
         printCollection(container.getStorage().iterator());
+
     }
 
     private static void printCollection(Iterator it){

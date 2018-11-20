@@ -26,9 +26,24 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         }
     }
 
+    //Restituisce il numero degli elementi di un utente presenti nella collezione
     @Override
     public int getSize(String Owner, String passw) {
-        return 0;
+        if (Owner == null) throw new NullPointerException();
+        if (passw == null) throw new NullPointerException();
+        //Inizializzo un contatore
+        int counter = 0;
+        //Se sono verificati
+        if (logIn(Owner, passw)) {
+            for (SharedData sd: storage) {
+                if (sd.canGetData(Owner))
+                    counter++;
+            }
+        } else {
+            //TODO Ricordarsi di lanciare exception
+        }
+        //Restituisco la quantità
+        return counter;
     }
 
     /** Inserisce il valore del dato nella collezione se vengono rispettati i controlli di identità. */
@@ -68,10 +83,13 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
         //Cerco un dato condiviso a cui Owner può accedere
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
-        //Se l'ho trovato allora lo cancello
-        if (dataFound != null)
+        //Se l'ho trovato allora lo cancello e lo restituisco
+        if (dataFound != null) {
             storage.remove(dataFound);
-        //Ritorno il dato cancellato
+            //Ritorno il dato cancellato
+            return dataFound.getData();
+        }
+        //Se non l'ho trovato allora restituisco null
         return null;
     }
 
@@ -79,10 +97,10 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
      * accedere allora restituisce il dato condiviso, altrimenti restituisce null. */
     private SharedData<E> getSharedData(String Owner, String passw, E data) {
         if (logIn(Owner, passw)){  //Se vengono rispettati i controlli di identità
-            for(SharedData sd: storage) {   //Per ogni dato nella collezione
-                if (sd.getData().equals(data)) {    //Cerco se esiste il dato 'data'
+            for (SharedData sd: storage) {   //Per ogni dato nella collezione
+                if (sd.canGetData(Owner)) {     //Cerco se esiste il dato 'data'
                     //Se lo trovo controllo se Owner può accedervi
-                    if (sd.canGetData(Owner)) {
+                    if (sd.getData().equals(data)) {
                         //Restituisco il dato condiviso
                         return sd;
                     }
@@ -100,6 +118,11 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     @Override
     public void share(String Owner, String passw, String Other, E data) {
+        if (Owner == null) throw new NullPointerException();
+        if (passw == null) throw new NullPointerException();
+        if (Other == null) throw new NullPointerException();
+        if (data == null) throw new NullPointerException();
+
 
     }
 
