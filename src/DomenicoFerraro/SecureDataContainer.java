@@ -11,25 +11,25 @@ public interface SecureDataContainer<E> {
      */
 
     //Crea l’identità un nuovo utente della collezione
-    public void createUser(String Id, String passw);
+    public void createUser(String Id, String passw) throws NullPointerException;
 
     //Restituisce il numero degli elementi di un utente presenti nella collezione
-    public int getSize(String Owner, String passw);
+    public int getSize(String Owner, String passw) throws NullPointerException;
 
     //Inserisce il valore del dato nella collezione se vengono rispettati i controlli di identità
-    public boolean put(String Owner, String passw, E data);
+    public boolean put(String Owner, String passw, E data) throws NullPointerException;
 
     //Ottiene una copia del valore del dato nella collezione se vengono rispettati i controlli di identità
-    public E get(String Owner, String passw, E data);
+    public E get(String Owner, String passw, E data) throws NullPointerException;
 
     //Rimuove il dato nella collezione se vengono rispettati i controlli di identità
-    public E remove(String Owner, String passw, E data);
+    public E remove(String Owner, String passw, E data) throws NullPointerException;
 
     //Crea una copia del dato nella collezione se vengono rispettati i controlli di identità
-    public void copy(String Owner, String passw, E data);
+    public void copy(String Owner, String passw, E data) throws NullPointerException;
 
     //Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità
-    public void share(String Owner, String passw, String Other, E data);
+    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException;
 
     //restituisce un iteratore (senza remove) che genera tutti i dati dell’utente in ordine arbitrario se vengono
     // rispettati i controlli di identità

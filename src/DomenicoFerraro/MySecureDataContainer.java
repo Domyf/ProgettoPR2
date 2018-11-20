@@ -15,9 +15,9 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Crea l’identità un nuovo utente della collezione se non esiste già. */
     @Override
-    public void createUser(String Id, String passw) {
-        if (Id == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
+    public void createUser(String Id, String passw) throws NullPointerException {
+        if (Id == null || passw == null)
+            throw new NullPointerException();
 
         if (!checkId(Id)) {                     //Se l'Id non è già presente nella collezione di utenti
             users.add(new User(Id, passw));     //Lo aggiungo
@@ -28,9 +28,9 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Restituisce il numero degli elementi di un utente presenti nella collezione */
     @Override
-    public int getSize(String Owner, String passw) {
-        if (Owner == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
+    public int getSize(String Owner, String passw) throws NullPointerException {
+        if (Owner == null || passw == null)
+            throw new NullPointerException();
         //Inizializzo un contatore
         int counter = 0;
         //Se sono verificati i controlli di identità
@@ -48,9 +48,10 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Inserisce il valore del dato nella collezione se vengono rispettati i controlli di identità. */
     @Override
-    public boolean put(String Owner, String passw, E data) {
-        if (Owner == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
+    public boolean put(String Owner, String passw, E data) throws NullPointerException {
+        if (Owner == null || passw == null || data == null)
+            throw new NullPointerException();
+
         boolean canPut = logIn(Owner, passw);      //Controllo l'identità
         if (canPut){  //Se vengono rispettati i controlli di identità
             //Inserisco il dato
@@ -61,10 +62,9 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Ottiene una copia del valore del dato nella collezione se vengono rispettati i controlli di identità */
     @Override
-    public E get(String Owner, String passw, E data) {
-        if (Owner == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
-        if (data == null) throw new NullPointerException();
+    public E get(String Owner, String passw, E data) throws NullPointerException {
+        if (Owner == null || passw == null || data == null)
+            throw new NullPointerException();
 
         //Cerco un dato condiviso a cui Owner può accedere che ha 'data' come valore
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
@@ -77,10 +77,9 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Rimuove il dato nella collezione se vengono rispettati i controlli di identità */
     @Override
-    public E remove(String Owner, String passw, E data) {
-        if (Owner == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
-        if (data == null) throw new NullPointerException();
+    public E remove(String Owner, String passw, E data) throws NullPointerException {
+        if (Owner == null || passw == null || data == null)
+            throw new NullPointerException();
 
         //Cerco un dato condiviso a cui Owner può accedere
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
@@ -96,10 +95,9 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Crea una copia del dato nella collezione se vengono rispettati i controlli di identità */
     @Override
-    public void copy(String Owner, String passw, E data) {
-        if (Owner == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
-        if (data == null) throw new NullPointerException();
+    public void copy(String Owner, String passw, E data) throws NullPointerException {
+        if (Owner == null || passw == null || data == null)
+            throw new NullPointerException();
 
         //Cerco un dato condiviso a cui Owner può accedere
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
@@ -112,11 +110,9 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità */
     @Override
-    public void share(String Owner, String passw, String Other, E data) {
-        if (Owner == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
-        if (Other == null) throw new NullPointerException();
-        if (data == null) throw new NullPointerException();
+    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException {
+        if (Owner == null || passw == null || Other == null || data == null)
+            throw new NullPointerException();
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         //if (!checkId(Other)) throw new WrongIdException();
 
@@ -132,8 +128,8 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
      * rispettati i controlli di identità */
     @Override
     public Iterator<E> getIterator(String Owner, String passw) throws NullPointerException{
-        if (Owner == null) throw new NullPointerException();
-        if (passw == null) throw new NullPointerException();
+        if (Owner == null || passw == null)
+            throw new NullPointerException();
         //Inizializzo una collezione
         Vector<E> userData = new Vector<>();
         //Se sono verificati i controlli di identità
@@ -148,7 +144,7 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
     }
 
     /** Restituisce true se vengono rispettati i controlli di identità, ovvero se esiste un utente con stesso id e passw, null altrimenti. */
-    public boolean logIn(String id, String passw){
+    private boolean logIn(String id, String passw){
         return users.contains(new User(id, passw));
     }
 
