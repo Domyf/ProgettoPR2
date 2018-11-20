@@ -44,13 +44,52 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         return canPut;   //Ritorno se ho inserito il dato o meno
     }
 
+    //Ottiene una copia del valore del dato nella collezione se vengono rispettati i controlli di identità
     @Override
     public E get(String Owner, String passw, E data) {
+        if (Owner == null) throw new NullPointerException();
+        if (passw == null) throw new NullPointerException();
+        if (data == null) throw new NullPointerException();
+
+        //Cerco un dato condiviso a cui Owner può accedere che ha 'data' come valore
+        SharedData<E> dataFound = getSharedData(Owner, passw, data);
+        //Se il dato l'ho trovato allora lo restituisco
+        if (dataFound != null)
+            return dataFound.getData();
+        //Altrimenti restituisco null
         return null;
     }
 
     @Override
     public E remove(String Owner, String passw, E data) {
+        if (Owner == null) throw new NullPointerException();
+        if (passw == null) throw new NullPointerException();
+        if (data == null) throw new NullPointerException();
+
+        //Cerco un dato condiviso a cui Owner può accedere
+        SharedData<E> dataFound = getSharedData(Owner, passw, data);
+        //Se l'ho trovato allora lo cancello
+        if (dataFound != null)
+            storage.remove(dataFound);
+        //Ritorno il dato cancellato
+        return null;
+    }
+
+    /** Se vengono rispettati i controlli di identità e se esiste un dato condiviso (come quello passato per argomento) a cui Owner può
+     * accedere allora restituisce il dato condiviso, altrimenti restituisce null. */
+    private SharedData<E> getSharedData(String Owner, String passw, E data) {
+        if (logIn(Owner, passw)){  //Se vengono rispettati i controlli di identità
+            for(SharedData sd: storage) {   //Per ogni dato nella collezione
+                if (sd.getData().equals(data)) {    //Cerco se esiste il dato 'data'
+                    //Se lo trovo controllo se Owner può accedervi
+                    if (sd.canGetData(Owner)) {
+                        //Restituisco il dato condiviso
+                        return sd;
+                    }
+                    //Altrimenti vado avanti perchè potrebbe esistere una copia dello stesso dato a cui Owner può accedere
+                }
+            }
+        }
         return null;
     }
 

@@ -133,7 +133,7 @@ public class Window {
                 logLbl.setText("<html>Log: <font color='red'>"+text+"</font></html>");
                 break;
             case SUCCESS_MESSAGE:
-                logLbl.setText("<html>Log: <font color='red'>"+text+"</font></html>");
+                logLbl.setText("<html>Log: <font color='green'>"+text+"</font></html>");
                 break;
         }
 
