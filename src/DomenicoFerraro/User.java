@@ -19,6 +19,7 @@ public class User {
         return id;
     }
 
+    /** Ritorna true se this ha lo stesso id di other */
     public boolean sameId(String other) {
         return id.equals(other);
     }

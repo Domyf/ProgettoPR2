@@ -4,9 +4,9 @@ import java.util.Vector;
 
 public class SharedData<E> {
 
-    private E data;
-    private String ownerId;
-    private Vector<String> othersIDs;
+    private E data; //Dato
+    private String ownerId; //ID Proprietario
+    private Vector<String> othersIDs;   //Vettore di ID degli utenti autorizzati
 
     public SharedData(E data, String ownerId) {
         if (data == null) throw new NullPointerException();
@@ -28,8 +28,12 @@ public class SharedData<E> {
 
     /** Restituisce true se l'id dell'utente passato per argomento può accedere il dato. */
     public boolean canGetData(String id){
-        return id.equals(ownerId);
-        //return othersIDs.contains(ownerId);
+        //return id.equals(ownerId);
+        return othersIDs.contains(id) || id.equals(ownerId);
+    }
+
+    public Vector<String> getOthersIDs() {
+        return othersIDs;
     }
 
     public String toString(){
