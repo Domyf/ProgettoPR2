@@ -3,12 +3,12 @@ package DomenicoFerraro;
 import java.util.Iterator;
 import java.util.Vector;
 
-public class MySecureDataContainer<E> implements SecureDataContainer<E> {
+public class SharedDataContainer<E> implements SecureDataContainer<E> {
 
     private Vector<User> users;
     private Vector<SharedData<E>> storage;
 
-    public MySecureDataContainer() {
+    public SharedDataContainer() {
         users = new Vector<>();
         storage = new Vector<>();
     }
@@ -18,53 +18,47 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
     public void createUser(String Id, String passw) throws NullPointerException {
         if (Id == null || passw == null)
             throw new NullPointerException();
+        if (checkId(Id)) throw new IdAlreadyExistsException();  //Se l'ID esiste già
 
-        if (!checkId(Id)) {                     //Se l'Id non è già presente nella collezione di utenti
-            users.add(new User(Id, passw));     //Lo aggiungo
-        } else {
-            System.out.println("Questo utente esiste già."); //TODO sostituire con una Exception
-        }
+        users.add(new User(Id, passw));     //Lo aggiungo
     }
 
     /** Restituisce il numero degli elementi di un utente presenti nella collezione */
     @Override
-    public int getSize(String Owner, String passw) throws NullPointerException {
+    public int getSize(String Owner, String passw) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null)
             throw new NullPointerException();
+        if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
+
         //Inizializzo un contatore
         int counter = 0;
-        //Se sono verificati i controlli di identità
-        if (logIn(Owner, passw)) {
-            for (SharedData sd: storage) {
-                if (sd.canGetData(Owner))
-                    counter++;
-            }
-        } else {
-            //TODO Ricordarsi di lanciare exception
+        //Itero per ogni dato
+        for (SharedData sd: storage) {  //Itero tutti i dati condivisi
+            if (sd.canGetData(Owner))   //Se trovo un dato a cui Owner può accedere
+                counter++;              //Incremento il contatore
         }
-        //Restituisco la quantità
+
+        //Restituisco il contatore
         return counter;
     }
 
     /** Inserisce il valore del dato nella collezione se vengono rispettati i controlli di identità. */
     @Override
-    public boolean put(String Owner, String passw, E data) throws NullPointerException {
+    public boolean put(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
             throw new NullPointerException();
+        if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        boolean canPut = logIn(Owner, passw);      //Controllo l'identità
-        if (canPut){  //Se vengono rispettati i controlli di identità
-            //Inserisco il dato
-            storage.add(new SharedData<>(data, Owner));
-        }
-        return canPut;   //Ritorno se ho inserito il dato o meno
+        // Inserisco il dato
+        return storage.add(new SharedData<>(data, Owner));
     }
 
     /** Ottiene una copia del valore del dato nella collezione se vengono rispettati i controlli di identità */
     @Override
-    public E get(String Owner, String passw, E data) throws NullPointerException {
+    public E get(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
             throw new NullPointerException();
+        if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Cerco un dato condiviso a cui Owner può accedere che ha 'data' come valore
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
@@ -77,9 +71,10 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Rimuove il dato nella collezione se vengono rispettati i controlli di identità */
     @Override
-    public E remove(String Owner, String passw, E data) throws NullPointerException {
+    public E remove(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
             throw new NullPointerException();
+        if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Cerco un dato condiviso a cui Owner può accedere
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
@@ -95,41 +90,47 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
 
     /** Crea una copia del dato nella collezione se vengono rispettati i controlli di identità */
     @Override
-    public void copy(String Owner, String passw, E data) throws NullPointerException {
+    public void copy(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
             throw new NullPointerException();
+        if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Cerco un dato condiviso a cui Owner può accedere
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
         //Se l'ho trovato allora lo copio
         if (dataFound != null) {
             SharedData<E> copy = new SharedData<>(dataFound.getData(), Owner);
-            storage.addElement(copy);
+            storage.add(copy);
         }
     }
 
-    /** Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità */
+    /** Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità (tutti*/
     @Override
-    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException {
+    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException {
         if (Owner == null || passw == null || Other == null || data == null)
             throw new NullPointerException();
-        if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         //if (!checkId(Other)) throw new WrongIdException();
+        if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
+        if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        //Cerco un dato condiviso a cui Owner può accedere
-        SharedData<E> dataFound = getSharedData(Owner, passw, data);
-        //Se l'ho trovato allora lo condivido con Other
-        if (dataFound != null) {
-            dataFound.addOther(Other);
+        for (SharedData<E> sd: storage) {   //Per ogni dato nella collezione
+            if (sd.canGetData(Owner)) {     //Cerco se Owner può accedere al dato
+                if (sd.getData().equals(data)) {    //Se il dato è uguale a quello passato per argomento
+                    sd.addOther(Other);
+                }
+                //Altrimenti vado avanti perchè potrebbe esistere una copia dello stesso dato a cui Owner invece può accedere
+            }
         }
     }
 
     /** Restituisce un iteratore (senza remove) che genera tutti i dati dell’utente in ordine arbitrario se vengono
      * rispettati i controlli di identità */
     @Override
-    public Iterator<E> getIterator(String Owner, String passw) throws NullPointerException{
+    public Iterator<E> getIterator(String Owner, String passw) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null)
             throw new NullPointerException();
+        if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
+
         //Inizializzo una collezione
         Vector<E> userData = new Vector<>();
         //Se sono verificati i controlli di identità
@@ -148,19 +149,17 @@ public class MySecureDataContainer<E> implements SecureDataContainer<E> {
         return users.contains(new User(id, passw));
     }
 
-    /** Se vengono rispettati i controlli di identità e se esiste un dato condiviso (come quello passato per argomento) a cui Owner può
+    /** Se esiste un dato condiviso come quello passato per argomento a cui Owner può
      * accedere allora restituisce il dato condiviso, altrimenti restituisce null. */
     private SharedData<E> getSharedData(String Owner, String passw, E data) {
-        if (logIn(Owner, passw)){  //Se vengono rispettati i controlli di identità
-            for (SharedData<E> sd: storage) {   //Per ogni dato nella collezione
-                if (sd.canGetData(Owner)) {     //Cerco se esiste il dato 'data'
-                    //Se lo trovo controllo se Owner può accedervi
-                    if (sd.getData().equals(data)) {
-                        //Restituisco il dato condiviso
-                        return sd;
-                    }
-                    //Altrimenti vado avanti perchè potrebbe esistere una copia dello stesso dato a cui Owner invece può accedere
+        for (SharedData<E> sd: storage) {   //Per ogni dato nella collezione
+            if (sd.canGetData(Owner)) {     //Cerco se esiste il dato 'data'
+                //Se lo trovo controllo se Owner può accedervi
+                if (sd.getData().equals(data)) {
+                    //Restituisco il dato condiviso
+                    return sd;
                 }
+                //Altrimenti vado avanti perchè potrebbe esistere una copia dello stesso dato a cui Owner invece può accedere
             }
         }
         return null;

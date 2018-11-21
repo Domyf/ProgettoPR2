@@ -9,7 +9,7 @@ public class Main {
         //Creo il dato, l'utente e la collezione
         Integer diciotto = 18;
         User dom = new User("Domenico", "pass123");
-        MySecureDataContainer<Integer> container = new MySecureDataContainer<>();
+        SharedDataContainer<Integer> container = new SharedDataContainer<>();
 
         //Aggiungo l'utente
         container.createUser(dom.getId(), dom.getPassw());

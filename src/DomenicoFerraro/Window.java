@@ -27,11 +27,11 @@ public class Window {
     private JLabel logLbl;
     private DefaultTableModel usersTableModel;
 
-    private MySecureDataContainer<Integer> container;
+    private SharedDataContainer<Integer> container;
 
     public Window(int width, int height, String title){
         JFrame frame = new JFrame(title);
-        container = new MySecureDataContainer<>();
+        container = new SharedDataContainer<>();
         setLookAndFeel();
         frame.setContentPane(basePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
