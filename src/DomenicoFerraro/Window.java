@@ -45,7 +45,11 @@ public class Window {
         newUserBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                container.createUser(newUserNameTxtField.getText(), newPasswTxtField.getText());
+                try {
+                    container.createUser(newUserNameTxtField.getText(), newPasswTxtField.getText());
+                } catch (UserAlreadyExistsException e1) {
+                    e1.printStackTrace();
+                }
                 updateUsersArea();
                 printLog("Utente creato con successo!", SUCCESS_MESSAGE);
             }
@@ -67,6 +71,8 @@ public class Window {
                     String message = "Dato non creato. Il dato inserito è in un formato errato!";
                     System.out.println(message);
                     printLog(message, ERROR_MESSAGE);
+                } catch (UserAccessDeniedException e1) {
+                    e1.printStackTrace();
                 }
 
             }
@@ -90,6 +96,8 @@ public class Window {
                     String message = "Dato non rimosso. Il dato inserito è in un formato errato!";
                     System.out.println(message);
                     printLog(message, ERROR_MESSAGE);
+                } catch (UserAccessDeniedException e1) {
+                    e1.printStackTrace();
                 }
             }
         });

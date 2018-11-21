@@ -80,9 +80,10 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
         //Se l'ho trovato allora lo cancello e lo restituisco
         if (dataFound != null) {
-            storage.remove(dataFound);
-            //Ritorno il dato cancellato
-            return dataFound.getData();
+            if (storage.remove(dataFound))  //Rimuovo e se ho avuto successo
+                return dataFound.getData(); //Ritorno il dato cancellato
+            else
+                return null;
         }
         //Se non l'ho trovato allora restituisco null
         return null;
@@ -113,7 +114,6 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
         //Se l'ho trovato
         if (dataFound != null) {
@@ -133,13 +133,11 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
 
         //Inizializzo una collezione
         Vector<E> userData = new Vector<>();
-        //Se sono verificati i controlli di identità
-        if (logIn(Owner, passw)) {
-            for (SharedData sd: storage) {  //Cerco tra tutti i dati condivisi
-                if (sd.canGetData(Owner))   //E se trovo dati condivisi che l'utente può leggere
-                    userData.add((E)sd.getData());  //Aggiungo il dato alla collezione
-            }
+        for (SharedData sd: storage) {  //Cerco tra tutti i dati condivisi
+            if (sd.canGetData(Owner))   //E se trovo dati condivisi che l'utente può leggere
+                userData.add((E)sd.getData());  //Aggiungo il dato alla collezione
         }
+
         //Ritorno un generatore (che non supporta remove()) dei dati presenti nella collezione appena creata
         return new UserDataGen<E>(userData);
     }
@@ -188,9 +186,9 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         private int size;
         private int currentIndex;
 
-        public UserDataGen(Vector<T> userData) {
+        public UserDataGen(Vector<T> userData) throws NullPointerException {
             if (userData == null) throw new NullPointerException();
-            this.userData = userData;
+            this.userData = new Vector<>(userData);
             currentIndex = 0;
             size = userData.size();
         }
