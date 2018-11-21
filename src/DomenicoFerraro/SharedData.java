@@ -22,8 +22,9 @@ public class SharedData<E> {
     }
 
     /** Aggiunge un nuovo utente alla lista di chi può accedere al dato. */
-    public void addOther(String other) {
-        othersIDs.addElement(other);
+    public void addOther(String other) throws IllegalArgumentException {
+        if (othersIDs.contains(other)) throw new IllegalArgumentException();
+        othersIDs.add(other);
     }
 
     /** Restituisce true se l'id dell'utente passato per argomento può accedere il dato. */

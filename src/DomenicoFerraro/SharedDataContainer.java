@@ -15,10 +15,10 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
 
     /** Crea l’identità un nuovo utente della collezione se non esiste già. */
     @Override
-    public void createUser(String Id, String passw) throws NullPointerException {
+    public void createUser(String Id, String passw) throws NullPointerException, UserAlreadyExistsException {
         if (Id == null || passw == null)
             throw new NullPointerException();
-        if (checkId(Id)) throw new IdAlreadyExistsException();  //Se l'ID esiste già
+        if (checkId(Id)) throw new UserAlreadyExistsException();  //Se l'ID esiste già
 
         users.add(new User(Id, passw));     //Lo aggiungo
     }
@@ -99,27 +99,27 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         SharedData<E> dataFound = getSharedData(Owner, passw, data);
         //Se l'ho trovato allora lo copio
         if (dataFound != null) {
-            SharedData<E> copy = new SharedData<>(dataFound.getData(), Owner);
-            storage.add(copy);
+            SharedData<E> duplicate = new SharedData<>(dataFound.getData(), Owner);
+            storage.add(duplicate);
         }
     }
 
     /** Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità (tutti*/
     @Override
-    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException {
+    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException, UserNotExistsException {
         if (Owner == null || passw == null || Other == null || data == null)
             throw new NullPointerException();
-        //if (!checkId(Other)) throw new WrongIdException();
+        if (!checkId(Other)) throw new UserNotExistsException();
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        for (SharedData<E> sd: storage) {   //Per ogni dato nella collezione
-            if (sd.canGetData(Owner)) {     //Cerco se Owner può accedere al dato
-                if (sd.getData().equals(data)) {    //Se il dato è uguale a quello passato per argomento
-                    sd.addOther(Other);
-                }
-                //Altrimenti vado avanti perchè potrebbe esistere una copia dello stesso dato a cui Owner invece può accedere
-            }
+
+        SharedData<E> dataFound = getSharedData(Owner, passw, data);
+        //Se l'ho trovato
+        if (dataFound != null) {
+            dataFound.addOther(Other);  //Lo condivido. Solleva IllegalArgumentException se il dato era già stato condiviso
+        } else {
+            throw new IllegalArgumentException();   //Non ho trovato il dato
         }
     }
 

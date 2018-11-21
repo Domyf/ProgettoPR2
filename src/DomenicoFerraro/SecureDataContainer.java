@@ -11,7 +11,7 @@ public interface SecureDataContainer<E> {
      */
 
     //Crea l’identità un nuovo utente della collezione
-    public void createUser(String Id, String passw) throws NullPointerException;
+    public void createUser(String Id, String passw) throws NullPointerException, UserAlreadyExistsException;
 
     //Restituisce il numero degli elementi di un utente presenti nella collezione
     public int getSize(String Owner, String passw) throws NullPointerException, UserAccessDeniedException;
@@ -29,7 +29,7 @@ public interface SecureDataContainer<E> {
     public void copy(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException;
 
     //Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità
-    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException;
+    public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException, UserNotExistsException;
 
     //restituisce un iteratore (senza remove) che genera tutti i dati dell’utente in ordine arbitrario se vengono
     // rispettati i controlli di identità
