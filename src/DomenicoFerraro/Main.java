@@ -1,97 +1,103 @@
 package DomenicoFerraro;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class Main {
 
+    private static Scanner reader;
+    private static SharedDataContainer<Integer> container;
+
     public static void main(String[] args) {
         //new Window(800,600,"TestProgettoPR2");
-        //Creo il dato, l'utente e la collezione
-        Integer diciotto = 18;
-        User dom = new User("Domenico", "pass123");
-        SharedDataContainer<Integer> container = new SharedDataContainer<>();
+        container = new SharedDataContainer<>();
+        reader = new Scanner(System.in);
+        boolean run = true;
+
+        while (run) {
+            StampaMenu();
+            int op = ChiediOperazione();
+            switch (op)
+            {
+                case 0: //Esci dal programma
+                    run = false;
+                    break;
+                case 1:
+                    CreaUtente();
+                    break;
+                case 2:
+                    InserisciDato();
+                    break;
+                case 3:
+                    RimuoviDato();
+                    break;
+            }
+            System.out.println();
+        }
+    }
+
+    private static void StampaMenu() {
+        System.out.println("0 - Esci dal programma");
+        System.out.println("1 - Aggiungi Utente");
+        System.out.println("2 - Inserisci Dato");
+        System.out.println("3 - Rimuovi Dato");
+    }
+
+    private static int ChiediOperazione() {
+        System.out.print("Inserisci operazione: ");
+        return reader.nextInt();
+    }
+
+    private static String ChiediStringa(String message) {
+        System.out.print(message+": ");
+        return reader.next();
+    }
+
+    private static Integer ChiediInteger(String message) {
+        System.out.print(message+": ");
+        return reader.nextInt();
+    }
+
+    private static void CreaUtente() {
+        String username = ChiediStringa("Username");
+        String passw = ChiediStringa("Password");
+
         try {
-            //Aggiungo l'utente
-            container.createUser(dom.getId(), dom.getPassw());
+            container.createUser(username, passw);
+            System.out.println("Utente creato!");
         } catch (UserAlreadyExistsException e) {
-            e.printStackTrace();
+            System.out.println("Utente già esistente!");
         }
-        //Aggiungo il dato
-        boolean done = false;
-        try {
-            done = container.put(dom.getId(), dom.getPassw(), diciotto);
-        } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
-        }
-        //Stampo se ho avuto successo o meno
-        System.out.println("Il dato è stato inserito: "+done);
+    }
 
-        //Stampo i dati presenti nella collezione
-        printCollection(container.getStorage().iterator());
-        //Provo ad ottenere il dato che ho inserito prima
-        Integer copia = null;
-        try {
-            copia = container.get(dom.getId(), dom.getPassw(), diciotto);
-        } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
-        }
-        //Stampo il dato ottenuto
-        System.out.println("La copia vale: "+copia);
-        //copia = 20;
+    private static void InserisciDato(){
+        String username = ChiediStringa("Username");
+        String passw = ChiediStringa("Password");
+        Integer dato = ChiediInteger("Dato");
 
-        //Stampo quanti dati ha l'utente dom
         try {
-            System.out.println(dom.getId()+" ha "+container.getSize(dom.getId(), dom.getPassw())+" dati.");
+            if (container.put(username, passw, dato))
+                System.out.println("Dato inserito!");
+            else
+                System.out.println("Dato non inserito!");
         } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
+            System.out.println("Accesso negato! Dato non inserito.");
         }
+    }
 
-        //Creo un nuovo utente e lo aggiungo
-        User ele = new User("Eleonora", "passEle");
-        try {
-            container.createUser(ele.getId(), ele.getPassw());
-        } catch (UserAlreadyExistsException e) {
-            e.printStackTrace();
-        }
-        try {
-            container.share(dom.getId(), dom.getPassw(), ele.getId(), diciotto);
-        } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
-        } catch (UserNotExistsException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Ho condiviso il dato con "+ele.getId());
+    private static void RimuoviDato() {
+        String username = ChiediStringa("Username");
+        String passw = ChiediStringa("Password");
+        Integer dato = ChiediInteger("Dato");
 
-        //Copio il dato
         try {
-            container.copy(dom.getId(), dom.getPassw(), diciotto);
+            if (container.remove(username, passw, dato) != null)
+                System.out.println("Dato rimosso!");
+            else
+                System.out.println("Dato non rimosso!");
         } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
+            System.out.println("Accesso negato! Dato non rimosso.");
         }
-        printCollection(container.getStorage().iterator());
-        //Stampo quanti dati ha l'utente dom
-        try {
-            System.out.println(ele.getId()+" ha "+container.getSize(ele.getId(), ele.getPassw())+" dati.");
-        } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
-        }
-        try {
-            printCollection(container.getIterator(ele.getId(), ele.getPassw()));
-        } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
-        }
-
-        //Cancello il dato
-        System.out.println("Cancello il dato");
-        Integer deleted = null;
-        try {
-            deleted = container.remove(dom.getId(), dom.getPassw(), diciotto);
-        } catch (UserAccessDeniedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Ho cancellato "+deleted);
-        printCollection(container.getStorage().iterator());
-
     }
 
     private static void printCollection(Iterator it){
