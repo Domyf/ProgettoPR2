@@ -91,7 +91,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
 
     /** Crea una copia del dato nella collezione se vengono rispettati i controlli di identità */
     @Override
-    public void copy(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
+    public void copy(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException, IllegalArgumentException {
         if (Owner == null || passw == null || data == null)
             throw new NullPointerException();
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
@@ -102,6 +102,8 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (dataFound != null) {
             SharedData<E> duplicate = new SharedData<>(dataFound.getData(), Owner);
             storage.add(duplicate);
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 
