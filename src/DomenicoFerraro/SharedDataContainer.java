@@ -206,11 +206,16 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     private static class UserDataGen<T> implements Iterator<T> {
         //OVERVIEW: Iterator dei dati a cui uno specifico utente può accedere
 
-        //IR: userData != null
+        //TYPICAL ELEMENT: <{userData.get(i) | 0 <= i < size}, size, currentIndex>
+
+        //IR: userData != null && size != null && size >= 0 && 0 <= currentIndex < size && size == userData.size()
+        //    && userData.get(i) != null for all 0 <= i < size
+
         private Vector<T> userData;
         private int size;
         private int currentIndex;
 
+        //EFFECTS: Costruisce this
         public UserDataGen(Vector<T> userData) throws NullPointerException {
             if (userData == null) throw new NullPointerException();
             this.userData = new Vector<>(userData);
