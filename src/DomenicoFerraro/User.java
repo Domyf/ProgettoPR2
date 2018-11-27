@@ -1,6 +1,10 @@
 package DomenicoFerraro;
 
 public class User {
+    //OVERVIEW: Tipo di dato che descrive la coppia <Id, password>
+
+    //TIPICAL ELEMENT: <id, passw>
+    //IR: id != null && passw != null
 
     private String id;
     private String passw;
