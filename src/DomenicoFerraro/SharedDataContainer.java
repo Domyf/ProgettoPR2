@@ -4,6 +4,26 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class SharedDataContainer<E> implements SecureDataContainer<E> {
+    //OVERVIEW:
+
+    /* TYPICAL ELEMENT: <{<ID_0, pass_0>, ... ,<ID_m-1, pass_m-1> | ID_i != ID_j per ogni 0 <= i < j < m},
+                        {data_0, ... ,data_n-1},
+                        {<ID_p, data_q> | 0<=p<m && 0<=q<n}>
+                       <Id_s, data_t> appartiene a this => ID_s appartiene a this && data_t appartiene a this per
+                        ogni 0 <= s < m && 0 <= t < n
+    */
+
+    //Abstraction Function
+    //AF(c) = <{<c.users.get(j).getId(), c.users.get(j).getPassw()> | 0 <= j < c.users.size()},
+    //         {c.storage.get(i).getData() | 0 <= i < c.storage.size()},
+    //         {<c.users.get(s).getId(), c.storage.get(t).getData()> | 0<=s<c.user.size()
+    //              && 0<=t<c.storage.size() && c.storage.get(t).canGetData(c.users.get(s).getId())}>
+
+    //IR: users != null && storage != null
+    //    && users.get(i) != null for all 0 <= i < users.size()
+    //    && storage.get(j) != null for all 0 <= j < storage.size()
+    //    && users.get(a).getId() != users.get(b).getId() for all 0 <= a < b < users.size()
+    //    && for all 0 <= t < storage.size() => (exists 0 <= k < users.size() tale che storage.get(t).canGetData(users.get(k).getId())
 
     private Vector<User> users;
     private Vector<SharedData<E>> storage;
@@ -61,7 +81,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Cerco un dato condiviso a cui Owner può accedere che ha 'data' come valore
-        SharedData<E> dataFound = getSharedData(Owner, passw, data);
+        SharedData<E> dataFound = getSharedData(Owner, data);
         //Se il dato l'ho trovato allora lo restituisco
         if (dataFound != null)
             return dataFound.getData();
@@ -77,7 +97,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Cerco un dato condiviso a cui Owner può accedere
-        SharedData<E> dataFound = getSharedData(Owner, passw, data);
+        SharedData<E> dataFound = getSharedData(Owner, data);
         //Se l'ho trovato allora lo cancello e lo restituisco
         if (dataFound != null) {
             if (storage.remove(dataFound))  //Rimuovo e se ho avuto successo
@@ -97,7 +117,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Cerco un dato condiviso a cui Owner può accedere
-        SharedData<E> dataFound = getSharedData(Owner, passw, data);
+        SharedData<E> dataFound = getSharedData(Owner, data);
         //Se l'ho trovato allora lo copio
         if (dataFound != null) {
             SharedData<E> duplicate = new SharedData<>(dataFound.getData(), Owner);
@@ -116,7 +136,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        SharedData<E> dataFound = getSharedData(Owner, passw, data);
+        SharedData<E> dataFound = getSharedData(Owner, data);
         //Se l'ho trovato
         if (dataFound != null) {
             dataFound.addOther(Other);  //Lo condivido. Solleva IllegalArgumentException se il dato era già stato condiviso
@@ -144,14 +164,15 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         return new UserDataGen<E>(userData);
     }
 
-    /** Restituisce true se vengono rispettati i controlli di identità, ovvero se esiste un utente con stesso id e passw, null altrimenti. */
+    /** EFFECTS: Restituisce true se vengono rispettati i controlli di identità, ovvero se esiste un utente con stesso id e passw, false altrimenti. */
     private boolean logIn(String id, String passw){
         return users.contains(new User(id, passw));
     }
 
-    /** Se esiste un dato condiviso come quello passato per argomento a cui Owner può
-     * accedere allora restituisce il dato condiviso, altrimenti restituisce null. */
-    private SharedData<E> getSharedData(String Owner, String passw, E data) {
+    /** EFFECTS: Se esiste un dato condiviso come data a cui Owner può
+     *           accedere allora restituisce il dato condiviso, altrimenti restituisce null.
+     * */
+    private SharedData<E> getSharedData(String Owner, E data) {
         for (SharedData<E> sd: storage) {   //Per ogni dato nella collezione
             if (sd.canGetData(Owner)) {     //Cerco se esiste il dato 'data'
                 //Se lo trovo controllo se Owner può accedervi
@@ -165,7 +186,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         return null;
     }
 
-    /** Restituisce true se l'id è già utilizzato, false altrimenti. */
+    /** EFFECTS: Restituisce true se other è già utilizzato, false altrimenti. */
     private boolean checkId(String other){
         for (User us: users)
             if (us.sameId(other))
@@ -183,7 +204,9 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     }
 
     private static class UserDataGen<T> implements Iterator<T> {
+        //OVERVIEW: Iterator dei dati a cui uno specifico utente può accedere
 
+        //IR: userData != null
         private Vector<T> userData;
         private int size;
         private int currentIndex;
