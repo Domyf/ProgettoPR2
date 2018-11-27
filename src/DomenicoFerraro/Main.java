@@ -64,8 +64,7 @@ public class Main {
     }
 
     private static int ChiediOperazione() {
-        System.out.print("Inserisci operazione: ");
-        return reader.nextInt();
+        return ChiediInteger("Inserisci operazione");
     }
 
     private static String ChiediStringa(String message) {
