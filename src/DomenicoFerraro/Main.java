@@ -9,7 +9,6 @@ public class Main {
     private static SharedDataContainer<Integer> container;
 
     public static void main(String[] args) {
-        //new Window(800,600,"TestProgettoPR2");
         container = new SharedDataContainer<>();
         reader = new Scanner(System.in);
         boolean run = true;
