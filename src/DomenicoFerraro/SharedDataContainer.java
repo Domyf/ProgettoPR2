@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class SharedDataContainer<E> implements SecureDataContainer<E> {
-    //OVERVIEW:
+    //TODO OVERVIEW:
 
     /* TYPICAL ELEMENT: <{<ID_0, pass_0>, ... ,<ID_m-1, pass_m-1> | ID_i != ID_j per ogni 0 <= i < j < m},
                         {data_0, ... ,data_n-1},
@@ -13,17 +13,19 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
                         ogni 0 <= s < m && 0 <= t < n
     */
 
-    //Abstraction Function
-    //AF(c) = <{<c.users.get(j).getId(), c.users.get(j).getPassw()> | 0 <= j < c.users.size()},
-    //         {c.storage.get(i).getData() | 0 <= i < c.storage.size()},
-    //         {<c.users.get(s).getId(), c.storage.get(t).getData()> | 0<=s<c.user.size()
-    //              && 0<=t<c.storage.size() && c.storage.get(t).canGetData(c.users.get(s).getId())}>
+    /* Abstraction Function
+       AF(c) = <{<c.users.get(j).getId(), c.users.get(j).getPassw()> | 0 <= j < c.users.size()},
+               {c.storage.get(i).getData() | 0 <= i < c.storage.size()},
+               {<c.users.get(s).getId(), c.storage.get(t).getData()> | 0<=s<c.user.size()
+                    && 0<=t<c.storage.size() && c.storage.get(t).canGetData(c.users.get(s).getId())}>
+    */
 
-    //IR: users != null && storage != null
-    //    && users.get(i) != null for all 0 <= i < users.size()
-    //    && storage.get(j) != null for all 0 <= j < storage.size()
-    //    && users.get(a).getId() != users.get(b).getId() for all 0 <= a < b < users.size()
-    //    && for all 0 <= t < storage.size() => (exists 0 <= k < users.size() tale che storage.get(t).canGetData(users.get(k).getId())
+    /* IR: users != null && storage != null
+           && users.get(i) != null for all 0 <= i < users.size()
+           && storage.get(j) != null for all 0 <= j < storage.size()
+           && users.get(a).getId() != users.get(b).getId() for all 0 <= a < b < users.size()
+           && for all 0 <= t < storage.size() => (exists 0 <= k < users.size() tale che storage.get(t).canGetData(users.get(k).getId())
+    */
 
     private Vector<User> users;
     private Vector<SharedData<E>> storage;
@@ -85,6 +87,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         //Se il dato l'ho trovato allora lo restituisco
         if (dataFound != null)
             return dataFound.getData();
+
         //Altrimenti restituisco null
         return null;
     }

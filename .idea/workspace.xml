@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ac3f7b9-f94e-4829-94b7-27d22e1990ce" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/DomenicoFerraro/HashingDataContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SecureDataContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SecureDataContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedData.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedDataContainer$UserDataGen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedDataContainer$UserDataGen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedDataContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/SharedDataContainer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProgettoPR2/DomenicoFerraro/Window.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DomenicoFerraro/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DomenicoFerraro/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DomenicoFerraro/SharedDataContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DomenicoFerraro/SharedDataContainer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,42 +27,42 @@
     <session id="461808079">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="17" />
+          <entry key="project.closed" value="18" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="2" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.15" value="2" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.7" value="5" />
+          <entry key="project.open.time.7" value="6" />
           <entry key="project.open.time.8" value="4" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="form" value="1" />
-          <entry key="java" value="12" />
+          <entry key="java" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="GUI_DESIGNER_FORM" value="1" />
-          <entry key="JAVA" value="12" />
+          <entry key="JAVA" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="java" value="23615" />
-          <entry key="txt" value="822" />
+          <entry key="java" value="24832" />
+          <entry key="txt" value="846" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="23615" />
-          <entry key="PLAIN_TEXT" value="829" />
+          <entry key="JAVA" value="24832" />
+          <entry key="PLAIN_TEXT" value="853" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -65,14 +70,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+            <state relative-caret-position="187">
+              <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2042#2043#0" expanded="true" />
                 <element signature="e#2102#2103#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/HashingDataContainer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="139" column="44" lean-forward="true" selection-start-line="139" selection-start-column="44" selection-end-line="139" selection-end-column="44" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4329#4330#0" expanded="true" />
+                <element signature="e#4373#4374#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,7 +101,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
+            <state relative-caret-position="359">
               <caret line="45" column="29" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="29" />
             </state>
           </provider>
@@ -90,7 +110,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
+            <state relative-caret-position="187">
               <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
             </state>
           </provider>
@@ -99,10 +119,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SharedDataContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="150" column="23" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="23" />
+            <state relative-caret-position="243">
+              <caret line="166" column="44" lean-forward="true" selection-start-line="154" selection-start-column="8" selection-end-line="166" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#8191#8192#0" expanded="true" />
+                <element signature="e#8249#8250#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -143,8 +165,9 @@
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/SecureDataContainer.java" />
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java" />
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/User.java" />
-        <option value="$PROJECT_DIR$/src/DomenicoFerraro/SharedDataContainer.java" />
         <option value="$PROJECT_DIR$/src/DomenicoFerraro/Main.java" />
+        <option value="$PROJECT_DIR$/src/DomenicoFerraro/SharedDataContainer.java" />
+        <option value="$PROJECT_DIR$/src/DomenicoFerraro/HashingDataContainer.java" />
       </list>
     </option>
   </component>
@@ -159,8 +182,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -187,7 +210,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="302" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543353335612" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543401509741" />
     <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHubDesktop/app-1.4.3/resources/app/git/cmd/git.exe" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
   </component>
@@ -383,7 +406,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543351525646</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Fix ChiediOperazione">
+      <created>1543353366524</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1543353366524</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView">
@@ -399,7 +429,7 @@
     <frame x="-6" y="-6" width="1549" height="837" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2857143" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28973842" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -408,7 +438,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.4022663" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3753541" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -452,7 +482,8 @@
     <MESSAGE value="Fine specifica SharedData e User. Inizio specifica SharedDataContainer." />
     <MESSAGE value="Fine specifica e main." />
     <MESSAGE value="Rimozione finestra" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rimozione finestra" />
+    <MESSAGE value="Fix ChiediOperazione" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix ChiediOperazione" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.base/java/lang/Object.java">
@@ -473,9 +504,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.form" />
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/UserNotExistsException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -502,19 +531,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-526">
-          <caret line="99" column="20" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Window.java" />
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
+        <state relative-caret-position="187">
           <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
         </state>
       </provider>
@@ -526,30 +546,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2042#2043#0" expanded="true" />
+            <element signature="e#2102#2103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SharedData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
+        <state relative-caret-position="359">
           <caret line="45" column="29" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/SharedDataContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="150" column="23" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="23" />
+        <state relative-caret-position="243">
+          <caret line="166" column="44" lean-forward="true" selection-start-line="154" selection-start-column="8" selection-end-line="166" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#8191#8192#0" expanded="true" />
+            <element signature="e#8249#8250#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/DomenicoFerraro/HashingDataContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+        <state relative-caret-position="240">
+          <caret line="139" column="44" lean-forward="true" selection-start-line="139" selection-start-column="44" selection-end-line="139" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2102#2103#0" expanded="true" />
+            <element signature="e#4329#4330#0" expanded="true" />
+            <element signature="e#4373#4374#0" expanded="true" />
           </folding>
         </state>
       </provider>
