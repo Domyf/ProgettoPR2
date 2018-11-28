@@ -4,7 +4,8 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class SharedDataContainer<E> implements SecureDataContainer<E> {
-    //TODO OVERVIEW:
+    //OVERVIEW: Tipo modificabile che descrive una collezione di n oggetti di tipo generico E i quali vengono memorizzati e condivisi
+    //          in un sistema di m utenti con un meccanismo che preserva la sicurezza dei dati.
 
     /* TYPICAL ELEMENT: <{<ID_0, pass_0>, ... ,<ID_m-1, pass_m-1> | ID_i != ID_j per ogni 0 <= i < j < m},
                         {data_0, ... ,data_n-1},

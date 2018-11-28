@@ -5,16 +5,39 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class HashingDataContainer<E> implements SecureDataContainer<E> {
-    //OVERVIEW:
+    //OVERVIEW: Tipo modificabile che descrive una collezione di n oggetti di tipo generico E i quali vengono memorizzati e condivisi
+    //          in un sistema di m utenti con un meccanismo che preserva la sicurezza dei dati.
 
-    /*  TYPICAL ELEMENT:
+    /* TYPICAL ELEMENT: <{<ID_0, pass_0>, ... ,<ID_m-1, pass_m-1> | ID_i != ID_j per ogni 0 <= i < j < m},
+                        {data_0, ... ,data_n-1},
+                        {<ID_p, data_q> | 0<=p<m && 0<=q<n}>
+                       <Id_s, data_t> appartiene a this => ID_s appartiene a this && data_t appartiene a this per
+                        ogni 0 <= s < m && 0 <= t < n
      */
+
     /* Abstraction Function
        AF(c) = <{<Id_i, pass_i> | 0 <= i < c.users.keySet().size() && Id_i = c.users.keySet().get(i) && pass_i = c.users.get(Id_i)},
-                {c.storage.get(i).getData() | 0 <= i < c.storage.size()},
-               {<c.users.get(s).getId(), c.storage.get(t).getData()> | 0<=s<c.user.size()
-                    && 0<=t<c.storage.size() && c.storage.get(t).canGetData(c.users.get(s).getId())}>
+                {c.dataVector.get(i) | 0 <= i < c.dataVector.size()},
+                {<Id_k, data_t> | for all 0<=k<c.users.keySet().size() => Id_k = c.users.keySet().get(k)
+                    && for all 0<=t<c.storage.get(Id_k).size() => data_t = c.storage.get(Id_k).get(t)}>
     */
+
+    /*
+        IR: users != null && dataVector != null && storage != null
+            && users.keySet() != null && users.values() != null
+            && users.keySet().get(i) != null per ogni 0 <= i < users.keySet().size()
+            && users.values().get(i) != null per ogni 0 <= i < users.values().size()
+            && storage.keySet() != null && storage.values() != null
+            && storage.keySet().get(i) != null per ogni 0 <= i < storage.keySet().size()
+            && storage.values().get(i) != null per ogni 0 <= i < storage.values().size()
+            && dataVector.get(i) != null per ogni 0 <= i < dataVector.size()
+            && users.keySet().size() == storage.keySet().size()
+            && users.keySet().containsAll(storage.keySet())
+            && storage.keySet().containsAll(users.keySet())
+            && dataVector.contains(storage.values().get(i)) per ogni 0 <= i < storage.values().size()
+
+     */
+
     private HashMap<String, String> users;
     private Vector<E> dataVector;
     private HashMap<String, Vector<E>> storage;
