@@ -20,7 +20,8 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new NullPointerException();
         if (checkId(Id)) throw new UserAlreadyExistsException();  //Se l'ID esiste già
 
-        users.put(Id, passw);     //Lo aggiungo
+        users.put(Id, passw);               //Lo aggiungo
+        storage.put(Id, new Vector<>());    //Inizializzo con un vettore vuoto
     }
 
     @Override
@@ -29,11 +30,7 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new NullPointerException();
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        Vector<E> data = storage.get(Owner);
-        if (data != null)
-            return data.size();
-
-        return 0;
+        return storage.get(Owner).size();
     }
 
     @Override
@@ -42,16 +39,7 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new NullPointerException();
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        Vector<E> dataVector = storage.get(Owner);  //Ottengo il vettore dei dati di Owner
-        //Se il vector è nullo lo istanzio
-        if (dataVector == null) {
-            dataVector = new Vector<>();
-            if (dataVector.add(data))   //Inserisco il dato
-                return storage.put(Owner, dataVector) == null;
-        } else if (dataVector.add(data))   // Inserisco il dato
-            return storage.put(Owner, dataVector) != null;  //Sovrascrivo la vecchia associazione
-
-        return false;
+        return storage.get(Owner).add(data);
     }
 
     @Override
@@ -125,16 +113,16 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         Vector<E> ownerDataVector = storage.get(Owner);
         Vector<E> otherDataVector = storage.get(Other);
 
-        if (ownerDataVector != null && otherDataVector != null) {
-            int index = ownerDataVector.indexOf(data);
-            if (index >= 0){
-                otherDataVector.add(ownerDataVector.get(index));
-            } else {
+        if (ownerDataVector.size() > 0) {     //Se Owner ha almeno un dato
+            int index = ownerDataVector.indexOf(data);              //Cerco l'indice di data
+            if (index >= 0) {                                       //Se è >=0 allora owner può vedere il dato
+                otherDataVector.add(ownerDataVector.get(index));    //Aggiungo il dato
+                storage.put(Other, otherDataVector);                //Aggiorno la hashMap
+            } else {    //Se Owner non ha il dato
                 throw new IllegalArgumentException();
             }
-        } else {
-            throw new IllegalArgumentException();
         }
+        throw new IllegalArgumentException();
     }
 
     @Override
