@@ -9,6 +9,11 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
     private HashMap<String, String> users;
     private HashMap<String, Vector<E>> storage;
 
+    public HashingDataContainer() {
+        users = new HashMap<>();
+        storage = new HashMap<>();
+    }
+
     @Override
     public void createUser(String Id, String passw) throws NullPointerException, UserAlreadyExistsException {
         if (Id == null || passw == null)
@@ -38,8 +43,13 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         Vector<E> dataVector = storage.get(Owner);  //Ottengo il vettore dei dati di Owner
-        if (dataVector != null)
-            return storage.get(Owner).add(data);    // Inserisco il dato
+        //Se il vector è nullo lo istanzio
+        if (dataVector == null) {
+            dataVector = new Vector<>();
+            if (dataVector.add(data))   //Inserisco il dato
+                return storage.put(Owner, dataVector) == null;
+        } else if (dataVector.add(data))   // Inserisco il dato
+            return storage.put(Owner, dataVector) != null;  //Sovrascrivo la vecchia associazione
 
         return false;
     }
@@ -133,11 +143,12 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new NullPointerException();
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        //Inizializzo una collezione
         Vector<E> userData = storage.get(Owner);
+        if (userData != null)
+            //Ritorno un generatore (che non supporta remove()) dei dati presenti nella collezione appena creata
+            return new UserDataGen<E>(userData);
 
-        //Ritorno un generatore (che non supporta remove()) dei dati presenti nella collezione appena creata
-        return new UserDataGen<E>(userData);
+        return new UserDataGen<E>(new Vector<E>());
     }
 
     /** EFFECTS: Restituisce true se l'id è già utilizzato, false altrimenti. */

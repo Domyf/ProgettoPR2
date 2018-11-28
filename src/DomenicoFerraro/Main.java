@@ -1,16 +1,16 @@
 package DomenicoFerraro;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 
 public class Main {
 
     private static Scanner reader;
-    private static SharedDataContainer<Integer> container;
+    private static SecureDataContainer<Integer> container;
 
     public static void main(String[] args) {
-        container = new SharedDataContainer<>();
+        //container = new SharedDataContainer<>();
+        container = new HashingDataContainer<>();
         reader = new Scanner(System.in);
         boolean run = true;
 
