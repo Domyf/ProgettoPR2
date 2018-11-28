@@ -5,13 +5,24 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class HashingDataContainer<E> implements SecureDataContainer<E> {
+    //OVERVIEW:
 
+    /*  TYPICAL ELEMENT:
+     */
+    /* Abstraction Function
+       AF(c) = <{<Id_i, pass_i> | 0 <= i < c.users.keySet().size() && Id_i = c.users.keySet().get(i) && pass_i = c.users.get(Id_i)},
+                {c.storage.get(i).getData() | 0 <= i < c.storage.size()},
+               {<c.users.get(s).getId(), c.storage.get(t).getData()> | 0<=s<c.user.size()
+                    && 0<=t<c.storage.size() && c.storage.get(t).canGetData(c.users.get(s).getId())}>
+    */
     private HashMap<String, String> users;
+    private Vector<E> dataVector;
     private HashMap<String, Vector<E>> storage;
 
     public HashingDataContainer() {
         users = new HashMap<>();
         storage = new HashMap<>();
+        dataVector = new Vector<>();
     }
 
     @Override
@@ -39,7 +50,10 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new NullPointerException();
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        return storage.get(Owner).add(data);
+        if (dataVector.add(data))
+            return storage.get(Owner).add(data);
+
+        return false;
     }
 
     @Override
@@ -49,13 +63,11 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Ottengo i dati a cui Owner può accedere
-        Vector<E> dataVector = storage.get(Owner);
+        Vector<E> userData = storage.get(Owner);
 
-        if (dataVector != null) {
-            int index = dataVector.indexOf(data);
-            if (index >= 0)
-                return dataVector.get(index);
-        }
+        int index = userData.indexOf(data);
+        if (index >= 0)
+            return userData.get(index);
 
         //Altrimenti restituisco null
         return null;
@@ -67,16 +79,22 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new NullPointerException();
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        //Ottengo i dati a cui Owner può accedere
-        Vector<E> dataVector = storage.get(Owner);
+        int removed = 0;
 
-        if (dataVector != null) {
-            int index = dataVector.indexOf(data);
-            if (index >= 0) {
-                return dataVector.remove(index);
+        //Ottengo i dati a cui Owner può accedere
+        //Se l'utente può accedere a questo dato
+        if (storage.get(Owner).contains(data)) {
+            Iterator<Vector<E>> allData = storage.values().iterator();
+            while (allData.hasNext()) {
+                Vector<E> v = allData.next();
+                if (v.remove(data))
+                    removed++;
             }
         }
-        //Se non l'ho trovato allora restituisco null
+
+        if (removed > 0)
+            return dataVector.remove(dataVector.indexOf(data));
+        //Se non l'ho trovato o rimosso allora restituisco null
         return null;
     }
 
@@ -87,18 +105,14 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
         //Ottengo i dati a cui Owner può accedere
-        Vector<E> dataVector = storage.get(Owner);
+        Vector<E> ownerData = storage.get(Owner);
 
-        if (dataVector != null){
-            int index = dataVector.indexOf(data);
-            if (index >= 0)
-                dataVector.add(dataVector.get(index));
-            else
-                throw new IllegalArgumentException();
-
-        } else {
+        int index = ownerData.indexOf(data);
+        if (index >= 0) {
+            ownerData.add(ownerData.get(index));
+            dataVector.add(ownerData.get(index));
+        } else
             throw new IllegalArgumentException();
-        }
     }
 
     @Override
@@ -109,20 +123,11 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        //Ottengo i dati a cui Owner può accedere
-        Vector<E> ownerDataVector = storage.get(Owner);
-        Vector<E> otherDataVector = storage.get(Other);
 
-        if (ownerDataVector.size() > 0) {     //Se Owner ha almeno un dato
-            int index = ownerDataVector.indexOf(data);              //Cerco l'indice di data
-            if (index >= 0) {                                       //Se è >=0 allora owner può vedere il dato
-                otherDataVector.add(ownerDataVector.get(index));    //Aggiungo il dato
-                storage.put(Other, otherDataVector);                //Aggiorno la hashMap
-            } else {    //Se Owner non ha il dato
-                throw new IllegalArgumentException();
-            }
-        }
-        throw new IllegalArgumentException();
+        if (storage.get(Owner).contains(data))  //Se Owner può vedere il dato
+            storage.get(Other).add(data);       //Aggiungo il dato a other
+        else     //Se Owner non può vedere il dato
+            throw new IllegalArgumentException();
     }
 
     @Override
@@ -131,12 +136,7 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new NullPointerException();
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
 
-        Vector<E> userData = storage.get(Owner);
-        if (userData != null)
-            //Ritorno un generatore (che non supporta remove()) dei dati presenti nella collezione appena creata
-            return new UserDataGen<E>(userData);
-
-        return new UserDataGen<E>(new Vector<E>());
+        return new UserDataGen<E>(storage.get(Owner));
     }
 
     /** EFFECTS: Restituisce true se l'id è già utilizzato, false altrimenti. */

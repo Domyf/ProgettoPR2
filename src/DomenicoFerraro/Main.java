@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
     private static Scanner reader;
-    private static SecureDataContainer<Integer> container;
+    private static HashingDataContainer<Integer> container;
 
     public static void main(String[] args) {
         //container = new SharedDataContainer<>();
