@@ -198,15 +198,6 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         return false;
     }
 
-    //TODO ricordarsi di togliere getUsers() e getStorage()
-    public Vector<User> getUsers() {
-        return users;
-    }
-
-    public Vector<SharedData<E>> getStorage() {
-        return storage;
-    }
-
     private static class UserDataGen<T> implements Iterator<T> {
         //OVERVIEW: Iterator dei dati a cui uno specifico utente può accedere
 
