@@ -145,7 +145,7 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         if (!checkId(Other)) throw new UserNotExistsException();
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
-
+        if (storage.get(Other).contains(data)) throw new IllegalArgumentException();    //Se l'utente ha già il dato
 
         if (storage.get(Owner).contains(data))  //Se Owner può vedere il dato
             storage.get(Other).add(data);       //Aggiungo il dato a other
