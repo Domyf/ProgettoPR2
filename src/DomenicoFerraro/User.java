@@ -10,7 +10,7 @@ public class User {
     private String passw;
 
     /** MODIFIES: this
-     *  EFFECTS: Costruisce this con <id, passw> */
+     *  EFFECTS: Inizializza this = <id, passw> */
     public User(String id, String passw) {
         this.id = id;
         this.passw = passw;

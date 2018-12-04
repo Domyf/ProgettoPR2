@@ -18,7 +18,7 @@ public class SharedData<E> {
      *  THROWS: se data == null solleva NullPointerException (unchecked)
      *          se ownerId == null solleva NullPointerException (unchecked)
      *  MODIFIES: this
-     *  EFFECTS: Costruisce this con <data, ownerId, {}>
+     *  EFFECTS: Inizializza this = <data, ownerId, {}>
      * */
     public SharedData(E data, String ownerId) throws NullPointerException {
         if (data == null) throw new NullPointerException();

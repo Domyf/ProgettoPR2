@@ -15,10 +15,10 @@ public interface SecureDataContainer<E> {
 
     //Crea l’identità un nuovo utente della collezione
     public void createUser(String Id, String passw) throws NullPointerException, UserAlreadyExistsException;
-    //REQUIRES: Owner != null && passw != null && <Owner, passw> non appartiene a this
-    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //REQUIRES: Id != null && passw != null && <Id, p> non appartiene a this con p qualsiasi
+    //THROWS: se Id == null solleva NullPointerException (unchecked)
     //        se passw == null solleva NullPointerException (unchecked)
-    //        se <Owner, passw> appartiene a this solleva UserAlreadyExistsException (checked)
+    //        se <Id, p> appartiene a this, con p qualsiasi, solleva UserAlreadyExistsException (checked)
     //MODIFIES: this
     //EFFECTS: aggiunge una nuova coppia <Id, passw> a this.
 
@@ -80,6 +80,7 @@ public interface SecureDataContainer<E> {
     public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException, UserNotExistsException;
     //REQUIRES: Owner != null && passw != null && data != null && Other != null && !Owner.equals(Other) &&
     //          <Owner, passw> appartiene a this && <Owner, data> appartiene a this && <Other, p> appartiene a this (con p qualsiasi)
+    //          && <Other, data> non appartiene a this
     //THROWS: se Owner == null solleva NullPointerException (unchecked)
     //        se passw == null solleva NullPointerException (unchecked)
     //        se data == null solleva NullPointerException (unchecked)
@@ -87,7 +88,8 @@ public interface SecureDataContainer<E> {
     //        se Owner.equals(Other) solleva IllegalArgumentException (unchecked)
     //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
     //        se <Other, p> non appartiene a this solleva UserNotExistsException (checked)
-    //        se <Owner, data> non appartiene a this IllegalArgumentException (unchecked)
+    //        se <Owner, data> non appartiene a this solleva IllegalArgumentException (unchecked)
+    //        se <Other, data> appartiene a this solleva IllegalArgumentException (unchecked)
     //MODIFIES: this
     //EFFECTS: aggiunge una nuova coppia <Other, data> in this.
 
@@ -100,6 +102,4 @@ public interface SecureDataContainer<E> {
     //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
     //EFFECTS: restituisce un Iterator di elementi di tipo E il quale itera l'insieme
     //         {data_t | <Owner, data_t> appartiene a this per ogni 0 <= t < n && data_t appartiene a this}
-
-    // TODO altre operazioni da definire a scelta
 }

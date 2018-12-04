@@ -31,12 +31,19 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     private Vector<User> users;
     private Vector<SharedData<E>> storage;
 
+    /** EFFECTS: Inizializza this = <{}, {}, {}>*/
     public SharedDataContainer() {
         users = new Vector<>();
         storage = new Vector<>();
     }
 
     /** Crea l’identità un nuovo utente della collezione se non esiste già. */
+    //REQUIRES: Id != null && passw != null && <Id, p> non appartiene a this con p qualsiasi
+    //THROWS: se Id == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se <Id, p> appartiene a this, con p qualsiasi, solleva UserAlreadyExistsException (checked)
+    //MODIFIES: this
+    //EFFECTS: aggiunge una nuova coppia <Id, passw> a this.
     @Override
     public void createUser(String Id, String passw) throws NullPointerException, UserAlreadyExistsException {
         if (Id == null || passw == null)
@@ -47,6 +54,11 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     }
 
     /** Restituisce il numero degli elementi di un utente presenti nella collezione */
+    //REQUIRES: Owner != null && passw != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //EFFECTS: ritorna la quantità di coppie <Owner, data_j> appartenenti a this per ogni 0<=j<n
     @Override
     public int getSize(String Owner, String passw) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null)
@@ -66,6 +78,14 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     }
 
     /** Inserisce il valore del dato nella collezione se vengono rispettati i controlli di identità. */
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //MODIFIES: this
+    //EFFECTS: aggiunge data in this e una nuova coppia <Owner, data> in this e restituisce true se queste aggiunte hanno
+    //         avuto successo, false altrimenti.
     @Override
     public boolean put(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
@@ -77,6 +97,13 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     }
 
     /** Ottiene una copia del valore del dato nella collezione se vengono rispettati i controlli di identità */
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //EFFECTS: se esiste data in this ed esiste la coppia <Owner, data_t> in this tale che data_t == data
+    //         ritorna data_t, null altrimenti.
     @Override
     public E get(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
@@ -94,6 +121,16 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     }
 
     /** Rimuove il dato nella collezione se vengono rispettati i controlli di identità */
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //MODIFIES: this
+    //EFFECTS: se esiste data in this && esiste la coppia <Owner, data_t> in this tale che data_t == data allora rimuove
+    //         data e <Owner, data_t> da this. Se la rimozione è avvenuta con successo restituisce data_t, null altrimenti.
+    //         Se non esiste data in this oppure non esiste la coppia <Owner, data_t> in this tale che data_t == data
+    //         allora restituisce null.
     @Override
     public E remove(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
@@ -114,6 +151,14 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
     }
 
     /** Crea una copia del dato nella collezione se vengono rispettati i controlli di identità */
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this && <Owner, data> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene in this solleva UserAccessDeniedException (checked)
+    //        se <Owner, data> non appartiene in this solleva IllegalArgumentException (unchecked)
+    //MODIFIES: this
+    //EFFECTS: duplica data in this e aggiunge una nuova coppia <Owner, data> in this
     @Override
     public void copy(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException, IllegalArgumentException {
         if (Owner == null || passw == null || data == null)
@@ -131,7 +176,21 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         }
     }
 
-    /** Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità (tutti*/
+    /** Condivide il dato nella collezione con un altro utente se vengono rispettati i controlli di identità */
+    //REQUIRES: Owner != null && passw != null && data != null && Other != null && !Owner.equals(Other) &&
+    //          <Owner, passw> appartiene a this && <Owner, data> appartiene a this && <Other, p> appartiene a this (con p qualsiasi)
+    //          && <Other, data> non appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se Other == null solleva NullPointerException (unchecked)
+    //        se Owner.equals(Other) solleva IllegalArgumentException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //        se <Other, p> non appartiene a this solleva UserNotExistsException (checked)
+    //        se <Owner, data> non appartiene a this solleva IllegalArgumentException (unchecked)
+    //        se <Other, data> appartiene a this solleva IllegalArgumentException (unchecked)
+    //MODIFIES: this
+    //EFFECTS: aggiunge una nuova coppia <Other, data> in this.
     @Override
     public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException, UserNotExistsException {
         if (Owner == null || passw == null || Other == null || data == null)
@@ -139,6 +198,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (!checkId(Other)) throw new UserNotExistsException();
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
+        if (getSharedData(Other, data) == null) throw new IllegalArgumentException();    //Se Other ha già il dato
 
         SharedData<E> dataFound = getSharedData(Owner, data);
         //Se l'ho trovato
@@ -151,6 +211,12 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
 
     /** Restituisce un iteratore (senza remove) che genera tutti i dati dell’utente in ordine arbitrario se vengono
      * rispettati i controlli di identità */
+    //REQUIRES: Owner != null && passw != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //EFFECTS: restituisce un Iterator di elementi di tipo E il quale itera l'insieme
+    //         {data_t | <Owner, data_t> appartiene a this per ogni 0 <= t < n && data_t appartiene a this}
     @Override
     public Iterator<E> getIterator(String Owner, String passw) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null)

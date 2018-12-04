@@ -22,7 +22,7 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
                     && for all 0<=t<c.storage.get(Id_k).size() => data_t = c.storage.get(Id_k).get(t)}>
     */
 
-    /*
+    /*  Invariant representation
         IR: users != null && dataVector != null && storage != null
             && users.keySet() != null && users.values() != null
             && users.keySet().get(i) != null per ogni 0 <= i < users.keySet().size()
@@ -35,19 +35,25 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             && users.keySet().containsAll(storage.keySet())
             && storage.keySet().containsAll(users.keySet())
             && dataVector.contains(storage.values().get(i)) per ogni 0 <= i < storage.values().size()
-
      */
 
-    private HashMap<String, String> users;
-    private Vector<E> dataVector;
-    private HashMap<String, Vector<E>> storage;
+    private HashMap<String, String> users;          //Id -> passw
+    private Vector<E> dataVector;                   //Vector di tutti i dati
+    private HashMap<String, Vector<E>> storage;     //Id -> Dati che Id vede
 
+    /** EFFECTS: Inizializza this = <{}, {}, {}>*/
     public HashingDataContainer() {
         users = new HashMap<>();
         storage = new HashMap<>();
         dataVector = new Vector<>();
     }
 
+    //REQUIRES: Id != null && passw != null && <Id, p> non appartiene a this con p qualsiasi
+    //THROWS: se Id == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se <Id, p> appartiene a this, con p qualsiasi, solleva UserAlreadyExistsException (checked)
+    //MODIFIES: this
+    //EFFECTS: Associa il valore passw alla chiave Id e associa un vettore vuoto alla chiave Id
     @Override
     public void createUser(String Id, String passw) throws NullPointerException, UserAlreadyExistsException {
         if (Id == null || passw == null)
@@ -58,6 +64,11 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         storage.put(Id, new Vector<>());    //Inizializzo con un vettore vuoto
     }
 
+    //REQUIRES: Owner != null && passw != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //EFFECTS: ritorna la quantità di coppie <Owner, data_j> appartenenti a this per ogni 0<=j<n
     @Override
     public int getSize(String Owner, String passw) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null)
@@ -67,6 +78,14 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         return storage.get(Owner).size();
     }
 
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //MODIFIES: this
+    //EFFECTS: aggiunge data in this e una nuova coppia <Owner, data> in this e restituisce true se queste aggiunte hanno
+    //         avuto successo, false altrimenti.
     @Override
     public boolean put(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
@@ -79,6 +98,13 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         return false;
     }
 
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //EFFECTS: se esiste data in this ed esiste la coppia <Owner, data_t> in this tale che data_t == data
+    //         ritorna data_t, null altrimenti.
     @Override
     public E get(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
@@ -96,6 +122,16 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         return null;
     }
 
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //MODIFIES: this
+    //EFFECTS: se esiste data in this && esiste la coppia <Owner, data_t> in this tale che data_t == data allora rimuove
+    //         data e <Owner, data_t> da this. Se la rimozione è avvenuta con successo restituisce data_t, null altrimenti.
+    //         Se non esiste data in this oppure non esiste la coppia <Owner, data_t> in this tale che data_t == data
+    //         allora restituisce null.
     @Override
     public E remove(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null || data == null)
@@ -121,6 +157,14 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         return null;
     }
 
+    //REQUIRES: Owner != null && passw != null && data != null && <Owner, passw> appartiene a this && <Owner, data> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene in this solleva UserAccessDeniedException (checked)
+    //        se <Owner, data> non appartiene in this solleva IllegalArgumentException (unchecked)
+    //MODIFIES: this
+    //EFFECTS: duplica data in this e aggiunge una nuova coppia <Owner, data> in this
     @Override
     public void copy(String Owner, String passw, E data) throws NullPointerException, UserAccessDeniedException, IllegalArgumentException {
         if (Owner == null || passw == null || data == null)
@@ -138,6 +182,20 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new IllegalArgumentException();
     }
 
+    //REQUIRES: Owner != null && passw != null && data != null && Other != null && !Owner.equals(Other) &&
+    //          <Owner, passw> appartiene a this && <Owner, data> appartiene a this && <Other, p> appartiene a this (con p qualsiasi)
+    //          && <Other, data> non appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se data == null solleva NullPointerException (unchecked)
+    //        se Other == null solleva NullPointerException (unchecked)
+    //        se Owner.equals(Other) solleva IllegalArgumentException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //        se <Other, p> non appartiene a this solleva UserNotExistsException (checked)
+    //        se <Owner, data> non appartiene a this solleva IllegalArgumentException (unchecked)
+    //        se <Other, data> appartiene a this solleva IllegalArgumentException (unchecked)
+    //MODIFIES: this
+    //EFFECTS: aggiunge una nuova coppia <Other, data> in this.
     @Override
     public void share(String Owner, String passw, String Other, E data) throws NullPointerException, IllegalArgumentException, UserAccessDeniedException, UserNotExistsException {
         if (Owner == null || passw == null || Other == null || data == null)
@@ -145,7 +203,7 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
         if (!checkId(Other)) throw new UserNotExistsException();
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
-        if (storage.get(Other).contains(data)) throw new IllegalArgumentException();    //Se l'utente ha già il dato
+        if (storage.get(Other).contains(data)) throw new IllegalArgumentException();    //Se l'utente other può vedere già il dato
 
         if (storage.get(Owner).contains(data))  //Se Owner può vedere il dato
             storage.get(Other).add(data);       //Aggiungo il dato a other
@@ -153,6 +211,12 @@ public class HashingDataContainer<E> implements SecureDataContainer<E> {
             throw new IllegalArgumentException();
     }
 
+    //REQUIRES: Owner != null && passw != null && <Owner, passw> appartiene a this
+    //THROWS: se Owner == null solleva NullPointerException (unchecked)
+    //        se passw == null solleva NullPointerException (unchecked)
+    //        se <Owner, passw> non appartiene a this solleva UserAccessDeniedException (checked)
+    //EFFECTS: restituisce un Iterator di elementi di tipo E il quale itera l'insieme
+    //         {data_t | <Owner, data_t> appartiene a this per ogni 0 <= t < n && data_t appartiene a this}
     @Override
     public Iterator<E> getIterator(String Owner, String passw) throws NullPointerException, UserAccessDeniedException {
         if (Owner == null || passw == null)
