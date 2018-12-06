@@ -9,6 +9,218 @@ public class Main {
     private static SecureDataContainer<Integer> container;
 
     public static void main(String[] args) {
+        SecureDataContainer<Integer> container = new SharedDataContainer<>();
+        //SecureDataContainer<Integer> container = new HashingDataContainer<>();
+
+        User mario = new User("Mario", "passmario");
+        User sara = new User("Sara", "passwSara");
+
+        //Creo due utenti e provo a crearne un altro che ha lo stesso id
+        try {
+            System.out.println("- Creo l'utente "+mario.getId());
+            container.createUser(mario.getId(), mario.getPassw());
+            System.out.println("Utente "+mario.getId()+" creato!");
+        } catch (UserAlreadyExistsException e) {
+            System.out.println("Utente già esistente!");
+        }
+
+        try {
+            System.out.println("\n - Creo l'utente "+mario.getId()+" ma con una password diversa.");
+            container.createUser(mario.getId(), "passdiversa");
+            System.out.println("Utente "+mario.getId()+" creato!");
+        } catch (UserAlreadyExistsException e) {
+            System.out.println("Utente già esistente!");
+        }
+
+        try {
+            System.out.println("\n - Creo l'utente "+sara.getId());
+            container.createUser(sara.getId(), sara.getPassw());
+            System.out.println("Utente "+sara.getId()+" creato!");
+        } catch (UserAlreadyExistsException e) {
+            System.out.println("Utente già esistente!");
+        }
+
+        System.out.println("\n - "+mario.getId()+" inserisce il numero 10 e "+sara.getId()+" inserisce il numero 342");
+        //Inserisco i dati
+        try {
+            if (container.put(mario.getId(), mario.getPassw(), 10))
+                System.out.println(mario.getId()+" ha inserito con successo il numero 10!");
+            else
+                System.out.println("Numero 10 non inserito!");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato! Dato non inserito.");
+        }
+
+        try {
+            if (container.put(sara.getId(), sara.getPassw(), 342))
+                System.out.println(sara.getId()+" ha inserito con successo il numero 342!");
+            else
+                System.out.println("Numero 342 non inserito!");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato! Dato non inserito.");
+        }
+
+        //Inserisco un dato ma sbaglio credenziale
+        try {
+            System.out.println("\n - "+ sara.getId()+" inserisce il numero 720 ma sbaglia l'ID.");
+            if (container.put("Sarasbagliato", sara.getPassw(), 720))
+                System.out.println(sara.getId()+" ha inserito con successo il numero 720!");
+            else
+                System.out.println("Numero 342 non inserito!");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato! Dato non inserito.");
+        }
+
+        try {
+            System.out.println("\n - "+ sara.getId()+" inserisce il numero 60");
+            if (container.put(sara.getId(), sara.getPassw(), 60))
+                System.out.println(sara.getId()+" ha inserito con successo il numero 60!");
+            else
+                System.out.println("Numero 60 non inserito!");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato! Dato non inserito.");
+        }
+
+        //Stampo i dati di Mario
+        try {
+            System.out.println("\n - Mario ottiene e stampa i suoi dati");
+            Iterator<Integer> marioDataIt = container.getIterator(mario.getId(), mario.getPassw());
+            System.out.print("[");
+            while (marioDataIt.hasNext()) {
+                System.out.print(" ");
+                System.out.print(marioDataIt.next());
+                System.out.print(" ");
+            }
+            System.out.println("] per un totale di " +  container.getSize(mario.getId(), mario.getPassw())+ " dati.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        }
+
+        //Stampo i dati di Sara
+        try {
+            System.out.println("\n - Sara ottiene e stampa i suoi dati");
+            Iterator<Integer> saraDataIt = container.getIterator(sara.getId(), sara.getPassw());
+            System.out.print("[");
+            while (saraDataIt.hasNext()) {
+                System.out.print(" ");
+                System.out.print(saraDataIt.next());
+                System.out.print(" ");
+            }
+            System.out.println("] per un totale di " +  container.getSize(sara.getId(), sara.getPassw())+ " dati.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        }
+
+        //Sara condivide con Mario
+        try {
+            System.out.println("\n - Sara condivide il numero 342 con Mario");
+            container.share(sara.getId(), sara.getPassw(), mario.getId(), 342);
+            System.out.println("Dato condiviso con successo.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Sara non ha accesso a questo dato oppure si vuole condividere il dato con se stessi! Dato non condiviso.");
+        } catch (UserNotExistsException e) {
+            System.out.println("Si vuole condividere il dato con un utente che non esiste! Dato non condiviso.");
+        }
+
+        //Sara condivide con Mario la stessa cosa
+        try {
+            System.out.println("\n - Sara ricondivide il numero 342 con Mario");
+            container.share(sara.getId(), sara.getPassw(), mario.getId(), 342);
+            System.out.println("Dato condiviso con successo.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Mario ha già accesso a questo dato! Dato non condiviso.");
+        } catch (UserNotExistsException e) {
+            System.out.println("Si vuole condividere il dato con un utente che non esiste! Dato non condiviso.");
+        }
+
+        //Mario duplica
+        try {
+            System.out.println("\n - Mario duplica il suo 10");
+            container.copy(mario.getId(), mario.getPassw(), 10);
+            System.out.println("Duplicazione avvenuta con successo.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Mario non ha accesso a questo dato! Duplicazione non avvenuta.");
+        }
+
+        //Stampo i dati di Mario
+        try {
+            System.out.println("\n - Mario ottiene e stampa i suoi dati");
+            Iterator<Integer> marioDataIt = container.getIterator(mario.getId(), mario.getPassw());
+            System.out.print("[");
+            while (marioDataIt.hasNext()) {
+                System.out.print(" ");
+                System.out.print(marioDataIt.next());
+                System.out.print(" ");
+            }
+            System.out.println("] per un totale di " +  container.getSize(mario.getId(), mario.getPassw())+ " dati.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        }
+
+        //Stampo i dati di Sara
+        try {
+            System.out.println("\n - Sara ottiene e stampa i suoi dati");
+            Iterator<Integer> saraDataIt = container.getIterator(sara.getId(), sara.getPassw());
+            System.out.print("[");
+            while (saraDataIt.hasNext()) {
+                System.out.print(" ");
+                System.out.print(saraDataIt.next());
+                System.out.print(" ");
+            }
+            System.out.println("] per un totale di " +  container.getSize(sara.getId(), sara.getPassw())+ " dati.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        }
+
+        //Cancello il 342
+        try {
+            System.out.println("\n - Sara cancella dalla collezione il numero 342");
+            if (container.remove(sara.getId(), sara.getPassw(), 342) != null)
+                System.out.println("Dato rimosso!");
+            else
+                System.out.println("Dato non rimosso!");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        }
+
+        //Stampo i dati di Mario
+        try {
+            System.out.println("\n - Mario ottiene e stampa i suoi dati");
+            Iterator<Integer> marioDataIt = container.getIterator(mario.getId(), mario.getPassw());
+            System.out.print("[");
+            while (marioDataIt.hasNext()) {
+                System.out.print(" ");
+                System.out.print(marioDataIt.next());
+                System.out.print(" ");
+            }
+            System.out.println("] per un totale di " +  container.getSize(mario.getId(), mario.getPassw())+ " dati.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        }
+
+        //Stampo i dati di Sara
+        try {
+            System.out.println("\n - Sara ottiene e stampa i suoi dati");
+            Iterator<Integer> saraDataIt = container.getIterator(sara.getId(), sara.getPassw());
+            System.out.print("[");
+            while (saraDataIt.hasNext()) {
+                System.out.print(" ");
+                System.out.print(saraDataIt.next());
+                System.out.print(" ");
+            }
+            System.out.println("] per un totale di " +  container.getSize(sara.getId(), sara.getPassw())+ " dati.");
+        } catch (UserAccessDeniedException e) {
+            System.out.println("Accesso negato!");
+        }
+    }
+
+    /*public static void main(String[] args) {
         //container = new SharedDataContainer<>();
         container = new HashingDataContainer<>();
         reader = new Scanner(System.in);
@@ -50,7 +262,7 @@ public class Main {
             System.out.println();
         }
         System.out.println("Ciao!");
-    }
+    }*/
 
     private static void StampaMenu() {
         System.out.println("0 - Esci dal programma");
@@ -163,7 +375,7 @@ public class Main {
         Integer datoInput = ChiediInteger("Dato");
 
         try {
-            container.copy(username, passw,datoInput);
+            container.copy(username, passw, datoInput);
             System.out.println("Dato copiato con successo");
         } catch (UserAccessDeniedException e) {
             System.out.println("Accesso negato!");

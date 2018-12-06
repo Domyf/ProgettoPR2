@@ -198,7 +198,7 @@ public class SharedDataContainer<E> implements SecureDataContainer<E> {
         if (!checkId(Other)) throw new UserNotExistsException();
         if (Owner.equals(Other)) throw new IllegalArgumentException();  //l'utente non deve condividere il dato con se stesso
         if (!logIn(Owner, passw)) throw new UserAccessDeniedException();  //Controllo di identità fallito
-        if (getSharedData(Other, data) == null) throw new IllegalArgumentException();    //Se Other ha già il dato
+        if (getSharedData(Other, data) != null) throw new IllegalArgumentException();    //Se Other ha già il dato
 
         SharedData<E> dataFound = getSharedData(Owner, data);
         //Se l'ho trovato
